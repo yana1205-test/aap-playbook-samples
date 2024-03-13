@@ -1,0 +1,11 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Check if `validated=true` is found in the config file
+      lineinfile:
+        path: myfile.conf
+        line: "validated=true"
+        state: present
+      check_mode: yes
+      register: conf
+      failed_when: (conf is changed) or (conf is failed)
