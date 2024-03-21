@@ -1,4 +1,4 @@
-- hosts: ansible-targets
+- hosts: on_premise_hosts
   gather_facts: no
   tasks:
     - name: Check if `validated=true` is found in the config file
