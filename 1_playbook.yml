@@ -1,11 +1,12 @@
 - hosts: ansible-targets
-  gather_facts: no
+  name: 'Check if SSH MaxStartups is configured or not'
   tasks:
-    - name: Check if `validated=true` is found in the config file
-      lineinfile:
-        path: myfile.conf
-        line: "validated=true"
-        state: present
-      check_mode: yes
-      register: conf
-      failed_when: (conf is changed) or (conf is failed)
+  - name: Check if SSH MaxStartups is configured or not
+    shell: grep "^MaxStartups" /etc/ssh/sshd_config
+    failed_when: false
+    changed_when: false
+    register: sshd_maxstartups_check
+  - name: Fail if SSH MaxStartups is not configured correctly
+    fail:
+      msg: "Please configure SSH MaxStartups correctly"
+    when: "'MaxStartups' not in sshd_maxstartups_check.stdout"
