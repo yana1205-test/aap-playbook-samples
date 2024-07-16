@@ -1,5 +1,4 @@
-- hosts: ansible-targets
-  name: 'Check if SSH MaxStartups is configured or not'
+- hosts: on_premise_hosts
   tasks:
   - name: Check if SSH MaxStartups is configured or not
     shell: grep "^MaxStartups" /etc/ssh/sshd_config
