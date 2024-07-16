@@ -1,0 +1,11 @@
+- name: "Check if SSH MaxSessions is configured"
+  hosts: localhost
+  tasks:
+    - name: "Check if SSH MaxSessions is configured"
+      assert:
+        that:
+          - sshd_max_sessions | int >= 10
+        fail_msg: "The requirement for SSH MaxSessions is not satisfied."
+        success_msg: "The requirement for SSH MaxSessions is satisfied."
+      tags:
+        - sshd_max_sessions
