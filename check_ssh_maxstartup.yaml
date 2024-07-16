@@ -1,0 +1,12 @@
+- hosts: localhost
+  tasks:
+    - name: Check if SSH MaxStartups is configured or not
+      shell: grep -q '^MaxStartups' /etc/ssh/sshd_config
+      failed_when: false
+      changed_when: false
+      register: sshd_maxstartups
+
+    - name: Fail if SSH MaxStartups is not configured
+      fail:
+        msg: "Please configure SSH MaxStartups"
+      when: sshd_maxstartups.rc != 0
