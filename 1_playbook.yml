@@ -1,4 +1,4 @@
-- hosts: on_premise_hosts
+- hosts: localhost
   tasks:
   - name: Check if SSH MaxStartups is configured or not
     shell: grep "^MaxStartups" /etc/ssh/sshd_config
