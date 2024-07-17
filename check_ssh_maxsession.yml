@@ -1,0 +1,18 @@
+- hosts: localhost
+  name: 'Check if SSH MaxSessions is Configured'
+  tasks:
+  - block:
+    - name: 'Check if SSH MaxSessions is Configured'
+      stat:
+        path: /etc/ssh/sshd_config
+      register: sshd_config
+    - name: 'Fail if SSH MaxSessions is not Configured'
+      fail:
+        msg: 'SSH MaxSessions is not Configured'
+      when: not sshd_config.stat.exists
+    - name: 'Check if SSH MaxSessions is Set to the Required Value'
+      command: grep -E '^\s*MaxSessions\s+[0-9]+' /etc/ssh/sshd_config
+      register: maxsessions
+      changed_when: false
+      failed_when: "'{{ sshd_max_sessions }}' not in maxsessions.stdout"
+    name: 'Check if SSH MaxSessions is Configured'

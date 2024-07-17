@@ -1,0 +1,9 @@
+- hosts: localhost
+  name: 'Check if SSH MaxStartups is Configured'
+  tasks:
+  - block:
+    - name: Check if MaxStartups is configured
+      command: grep -E "^MaxStartups" /etc/ssh/sshd_config
+      register: maxstartups_configured
+      failed_when: "'MaxStartups' not in maxstartups_configured.stdout"
+    name: 'Configure SSH Daemon to Use FIPS 140-2 Validated MACs: openssh.config'
